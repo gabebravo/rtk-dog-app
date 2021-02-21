@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../redux/store';
+import { AppThunk, RootState } from '../../store';
 
 interface IBreeds {
   breeds: {
@@ -15,8 +15,8 @@ interface IBreed {
   [key: string]: string[];
 };
 
-export const dogSlice = createSlice({
-  name: 'dogs',
+export const breedsSlice = createSlice({
+  name: 'breeds',
   initialState,
   reducers: {
     setBreed: (state, action: PayloadAction<IBreed>) => {
@@ -26,7 +26,7 @@ export const dogSlice = createSlice({
   },
 });
 
-export const { setBreed } = dogSlice.actions;
+export const { setBreed } = breedsSlice.actions;
 
 export const fetchBreeds = (): AppThunk => async dispatch => {
   const allBreeds = await fetch('https://dog.ceo/api/breeds/list/all')
@@ -45,6 +45,6 @@ export const fetchBreeds = (): AppThunk => async dispatch => {
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectDogs = (state: RootState) => state.dogs;
+export const selectDogs = (state: RootState) => state.dashboard;
 
-export default dogSlice.reducer;
+export default breedsSlice.reducer;

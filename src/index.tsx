@@ -11,14 +11,12 @@ import * as serviceWorker from './serviceWorker';
 const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <React.StrictMode>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <App />
-          <ReactQueryDevtools initialIsOpen />
-        </QueryClientProvider>
-      </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <App />
+      {/* <ReactQueryDevtools initialIsOpen /> */}
+    </QueryClientProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

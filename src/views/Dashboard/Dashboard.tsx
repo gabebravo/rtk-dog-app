@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import {
-  setBreedData,
-  selectDogs,
-} from './dashboardReducer';
+import { setBreeds } from './dashboardReducer';
+import Panels from './Panels'
 
 export default function Dogs() {
-  const breedsList = useSelector(selectDogs);
   const dispatch = useDispatch();
 
   // API CALL TO GET ALL BREEDS
@@ -17,12 +14,10 @@ export default function Dogs() {
 
   useEffect(() => {
     if(status === 'success') {
-      dispatch(setBreedData(data?.data?.message))
+      dispatch(setBreeds(data?.data?.message))
     }
   }, [status])
 
-
-  console.log('breedsList', breedsList)
   return status === 'loading' ? (
     <span>Loading...</span>
   ) : status === 'error' ? (
@@ -30,9 +25,8 @@ export default function Dogs() {
   ) : (
     <>
       {isFetching ? <div>Refreshing...</div> : null}
-
       <div>
-        <h3>Data here</h3>
+        <Panels />
       </div>
     </>
   )

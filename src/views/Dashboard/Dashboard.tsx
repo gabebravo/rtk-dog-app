@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 import {
-  setBreedData,
+  setBreeds,
   selectDogs,
 } from './dashboardReducer';
 
@@ -17,7 +17,7 @@ export default function Dogs() {
 
   useEffect(() => {
     if(status === 'success') {
-      dispatch(setBreedData(data?.data?.message))
+      dispatch(setBreeds(data?.data?.message))
     }
   }, [status])
 

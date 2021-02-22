@@ -21,14 +21,11 @@ export const breedsSlice = createSlice({
     setBreeds: (state, action: PayloadAction<IBreed>) => {
       state.breeds = action.payload;
     },
-    setBreedData: (state, action: PayloadAction<any>) => {
-      state.breeds = action.payload;
-    },
   },
 });
 
 // export actions to dispatch from components
-export const { setBreeds, setBreedData } = breedsSlice.actions;
+export const { setBreeds } = breedsSlice.actions;
 
 // THUNK ASYNC EXAMPLE
 // export const fetchBreeds = (): AppThunk => async dispatch => {

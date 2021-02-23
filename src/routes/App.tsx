@@ -8,6 +8,7 @@ const Gallery = lazy(() => import('../views/Gallery/Gallery'));
 const NoMatch = () => <>'There is nothing to see here'</>;
 
 export default function App(): ReactElement {
+  
   return (
     <RouterWrapper>
       <Suspense fallback={<p>...Loading</p>}>

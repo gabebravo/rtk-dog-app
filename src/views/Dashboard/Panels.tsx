@@ -2,7 +2,8 @@ import React, { ReactElement } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import MainBreedList from './MainBreedList';
+import BreedPicker from './BreedPicker';
+import BreedImages from './BreedImages';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,12 +25,12 @@ export default function Panels(): ReactElement {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-            <MainBreedList />
+            <BreedPicker />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper className={classes.paper}>
-            <h3>Sub Breed List</h3>
+            <BreedImages />
           </Paper>
         </Grid>
       </Grid>

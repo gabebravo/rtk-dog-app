@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MainBreedList(): ReactElement {
+export default function BreedPicker(): ReactElement {
   const allBreedsObj = useSelector(breeds);
   const breedList = useSelector(breedNames);
   const subBreedList = useSelector(subBreeds);
@@ -29,9 +29,13 @@ export default function MainBreedList(): ReactElement {
 
   useEffect(() => {
     if(!subBreedList.includes(breed)) {
-      // Not a sub breed
+      // Not a sub breed >> GET PICS
     }
   }, [breed])
+
+  useEffect(() => {
+    // sub breed >> GET PICS
+  }, [subBreed])
 
   const handleBreed = (event: React.ChangeEvent<{ value: unknown }>) => {
     setBreed(event.target.value as string);

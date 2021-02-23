@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import dashboardReducer from './views/Dashboard/dashboardReducer';
+import breedsReducer from './breedsReducer';
 
 export const store = configureStore({
   reducer: {
-    dashboard: dashboardReducer,
+    dogs: breedsReducer,
   },
 });
 

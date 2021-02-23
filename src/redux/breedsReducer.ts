@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../store';
-export interface IBreeds {
-  breeds: string[],
-  subBreeds: string[]
+import { AppThunk, RootState } from './store';
+interface IBreeds {
+  breeds: {
+    [key: string]: string[];
+  }
 };
 
 const initialState: IBreeds = {
-  breeds: [],
-  subBreeds: []
+  breeds: {}
 };
 
 interface IBreed {
@@ -19,15 +19,7 @@ export const breedsSlice = createSlice({
   initialState,
   reducers: {
     setBreeds: (state, action: PayloadAction<IBreed>) => {
-      const dogs = Object.keys(action.payload).reduce((acc: IBreeds, key: string) => {
-        action.payload[key].length > 0 ? acc.subBreeds.push(key) : acc.breeds.push(key)
-        return acc
-      }, { 
-        breeds: [],
-        subBreeds: []
-      })
-      state.breeds = dogs.breeds;
-      state.subBreeds = dogs.subBreeds;
+      state.breeds = action.payload;
     },
   },
 });
@@ -53,7 +45,8 @@ export const { setBreeds } = breedsSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const breeds = (state: RootState) => state.dashboard.breeds;
-export const subBreeds = (state: RootState) => state.dashboard.subBreeds;
+export const breeds = (state: RootState) => state.dogs.breeds;
+export const breedNames = (state: RootState) => Object.keys(state.dogs.breeds);
+export const subBreeds = (state: RootState) => Object.keys(state.dogs.breeds).filter(key => state.dogs.breeds[key].length);
 
 export default breedsSlice.reducer;

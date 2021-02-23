@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { setBreeds } from './dashboardReducer';
+import { setBreeds } from '../../redux/breedsReducer';
 import Panels from './Panels'
 
 export default function Dogs() {

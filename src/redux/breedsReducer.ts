@@ -1,35 +1,42 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from './store';
+
+type TBreed = string
 interface IBreeds {
   [key: string]: string[];
 };
-type IBreedImgs = string[]
+type TBreedImgs = string[]
 
 type IBreedState = {
   breeds: IBreeds
-  breedImages: IBreedImgs
+  breedImages: TBreedImgs
+  breed: TBreed
 }
 
 const initialState: IBreedState = {
   breeds: {},
-  breedImages: []
+  breedImages: [], 
+  breed: ''
 };
 
 export const breedsSlice = createSlice({
   name: 'breeds',
   initialState,
   reducers: {
+    setBreed: (state, action: PayloadAction<TBreed>) => {
+      state.breed = action.payload;
+    },
     setBreeds: (state, action: PayloadAction<IBreeds>) => {
       state.breeds = action.payload;
     },
-    setBreedImages: (state, action: PayloadAction<string[]>) => {
+    setBreedImages: (state, action: PayloadAction<TBreedImgs>) => {
       state.breedImages = [...action.payload];
     },
   },
 });
 
 // export actions to dispatch from components
-export const { setBreeds, setBreedImages } = breedsSlice.actions;
+export const { setBreed, setBreeds, setBreedImages } = breedsSlice.actions;
 
 // THUNK ASYNC EXAMPLE
 export const fetchBreedImages = (breed: string): AppThunk => async dispatch => {
@@ -37,12 +44,14 @@ export const fetchBreedImages = (breed: string): AppThunk => async dispatch => {
     const allImages = await fetch(`https://dog.ceo/api/breed/${breed}/images`)
     const { message } = await allImages.json()
     dispatch(setBreedImages(message))
+    dispatch(setBreed(breed))
   }
 };
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
+export const breed = (state: RootState) => state.dogs.breed;
 export const breeds = (state: RootState) => state.dogs.breeds;
 export const breedImages = (state: RootState) => state.dogs.breedImages;
 export const breedNames = (state: RootState) => Object.keys(state.dogs.breeds);

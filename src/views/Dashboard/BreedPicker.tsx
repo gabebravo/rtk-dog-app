@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ReactElement } from 'react'
-import { useSelector } from 'react-redux';
-import { breeds, breedNames, subBreeds } from '../../redux/breedsReducer';
+import { useSelector, useDispatch } from 'react-redux';
+import { breeds, breedNames, subBreeds, fetchBreedImages } from '../../redux/breedsReducer';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -25,16 +25,18 @@ export default function BreedPicker(): ReactElement {
   const subBreedList = useSelector(subBreeds);
   const [breed, setBreed] = useState('');
   const [subBreed, setSubBreed] = useState('');
+  const dispatch = useDispatch()
   const classes = useStyles();
 
   useEffect(() => {
-    if(!subBreedList.includes(breed)) {
-      // Not a sub breed >> GET PICS
+    console.log('breed', breed)
+    if(breed && !subBreedList.includes(breed)) {
+      dispatch(fetchBreedImages(breed))
     }
   }, [breed])
 
   useEffect(() => {
-    // sub breed >> GET PICS
+    dispatch(fetchBreedImages(breed))
   }, [subBreed])
 
   const handleBreed = (event: React.ChangeEvent<{ value: unknown }>) => {

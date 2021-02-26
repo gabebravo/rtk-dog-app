@@ -6,17 +6,20 @@ interface IBreeds {
   [key: string]: string[];
 };
 type TBreedImgs = string[]
+type TBreedImgGallery = string[]
 
 type IBreedState = {
   breeds: IBreeds
   breedImages: TBreedImgs
   breed: TBreed
+  gallery: TBreedImgGallery
 }
 
 const initialState: IBreedState = {
   breeds: {},
   breedImages: [], 
-  breed: ''
+  breed: '',
+  gallery: [], 
 };
 
 export const breedsSlice = createSlice({
@@ -32,11 +35,17 @@ export const breedsSlice = createSlice({
     setBreedImages: (state, action: PayloadAction<TBreedImgs>) => {
       state.breedImages = [...action.payload];
     },
+    setGalleryImg: (state, action: PayloadAction<string>) => {
+      state.gallery = [...state.gallery, action.payload];
+    },
+    removeGalleryImg: (state, action: PayloadAction<string>) => {
+      state.gallery = [...state.gallery].filter(img => img !== action.payload);
+    },
   },
 });
 
 // export actions to dispatch from components
-export const { setBreed, setBreeds, setBreedImages } = breedsSlice.actions;
+export const { setGalleryImg, removeGalleryImg, setBreed, setBreeds, setBreedImages } = breedsSlice.actions;
 
 // THUNK ASYNC EXAMPLE
 export const fetchBreedImages = (breed: string): AppThunk => async dispatch => {
@@ -53,6 +62,7 @@ export const fetchBreedImages = (breed: string): AppThunk => async dispatch => {
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const breed = (state: RootState) => state.dogs.breed;
 export const breeds = (state: RootState) => state.dogs.breeds;
+export const gallery = (state: RootState) => state.dogs.gallery;
 export const breedImages = (state: RootState) => state.dogs.breedImages;
 export const breedNames = (state: RootState) => Object.keys(state.dogs.breeds);
 export const subBreeds = (state: RootState) => Object.keys(state.dogs.breeds).filter(key => state.dogs.breeds[key].length);

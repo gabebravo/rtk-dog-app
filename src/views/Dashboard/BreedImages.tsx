@@ -6,17 +6,10 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/AddCircle';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Dialog from '@material-ui/core/Dialog';
-import { useSelector } from 'react-redux';
-import { breed, breedImages } from '../../redux/breedsReducer';
-
-// const itemData = [
-//   {
-//     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-//     title: 'Breakfast',
-//     author: '@bkristastucchio',
-//   },
-// ];
+import { useSelector, useDispatch } from 'react-redux';
+import { setGalleryImg, gallery, breed, breedImages } from '../../redux/breedsReducer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,18 +36,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-interface Props {
-  
-}
-
-export default function BreedImages({}: Props): ReactElement {
+export default function BreedImages(): ReactElement {
   const classes = useStyles();
   const [modalImg, setModalImg] = useState('');
   const breedName = useSelector(breed);
   const breedImgList = useSelector(breedImages);
+  const imgGallery = useSelector(gallery);
+  const dispatch = useDispatch()
 
   const addImg = (dog: string): void => {
-    console.log('icon', dog)
+    dispatch(setGalleryImg(dog))
   }
 
   const showModal = (imgSrc: string): void => {
@@ -78,7 +69,7 @@ export default function BreedImages({}: Props): ReactElement {
                     onClick={() => addImg(dog)}
                     aria-label={`add dogo ${dog}`} 
                     className={classes.icon}>
-                    <AddIcon />
+                    { imgGallery.includes(dog) ? <CheckCircleIcon /> : <AddIcon /> }
                   </IconButton>
                 }
               />

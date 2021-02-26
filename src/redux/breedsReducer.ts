@@ -35,6 +35,10 @@ export const breedsSlice = createSlice({
     setBreedImages: (state, action: PayloadAction<TBreedImgs>) => {
       state.breedImages = [...action.payload];
     },
+    resetPickedBreed: (state) => {
+      state.breedImages = []
+      state.breed = ''
+    },
     setGalleryImg: (state, action: PayloadAction<string>) => {
       state.gallery = [...state.gallery, action.payload];
     },
@@ -45,7 +49,7 @@ export const breedsSlice = createSlice({
 });
 
 // export actions to dispatch from components
-export const { setGalleryImg, removeGalleryImg, setBreed, setBreeds, setBreedImages } = breedsSlice.actions;
+export const { setGalleryImg, removeGalleryImg, setBreed, setBreeds, setBreedImages, resetPickedBreed } = breedsSlice.actions;
 
 // THUNK ASYNC EXAMPLE
 export const fetchBreedImages = (breed: string): AppThunk => async dispatch => {

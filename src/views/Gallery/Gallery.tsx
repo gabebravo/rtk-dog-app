@@ -23,11 +23,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   gridList: {
-    width: 500,
-    height: 450,
+    maxWidth: '50%',
   },
   icon: {
-    color: '#FFF',
+    color: '#CD5C5C',
   },
   subHeader: {
     fontSize: '1.5rem'
@@ -52,7 +51,7 @@ export default function Gallery(): ReactElement {
     return (
       <div className={classes.root}>
         <h2>Dog Breed Gallery</h2>
-        <GridList cellHeight={180}>
+        <GridList className={classes.gridList} cellHeight={180}>
           {imgGallery.length && imgGallery.map((dog: string) => (
             <GridListTile key={dog}>
               <img src={dog} alt={dog} onClick={() => showModal(dog)}/>

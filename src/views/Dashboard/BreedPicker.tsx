@@ -29,7 +29,6 @@ export default function BreedPicker(): ReactElement {
   const classes = useStyles();
 
   useEffect(() => {
-    console.log('breed', breed)
     if(breed && !subBreedList.includes(breed)) {
       dispatch(fetchBreedImages(breed))
     }

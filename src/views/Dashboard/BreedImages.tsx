@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from 'react';
+import React, {ReactElement, useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/AddCircle';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Dialog from '@material-ui/core/Dialog';
 import { useSelector, useDispatch } from 'react-redux';
-import { setGalleryImg, gallery, breed, breedImages } from '../../redux/breedsReducer';
+import { setGalleryImg, gallery, breed, resetPickedBreed, breedImages } from '../../redux/breedsReducer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,8 +28,11 @@ const useStyles = makeStyles((theme) => ({
     width: 500,
     height: 450,
   },
-  icon: {
+  unpicked: {
     color: '#FFF',
+  },
+  picked: {
+    color: '#3CB371',
   },
   subHeader: {
     fontSize: '1.5rem'
@@ -44,8 +47,13 @@ export default function BreedImages(): ReactElement {
   const imgGallery = useSelector(gallery);
   const dispatch = useDispatch()
 
+  // @ts-ignore
+  useEffect(() => {
+    return () => dispatch(resetPickedBreed())
+  }, [])
+
   const addImg = (dog: string): void => {
-    dispatch(setGalleryImg(dog))
+    !imgGallery.includes(dog) && dispatch(setGalleryImg(dog))
   }
 
   const showModal = (imgSrc: string): void => {
@@ -67,9 +75,8 @@ export default function BreedImages(): ReactElement {
                 actionIcon={
                   <IconButton 
                     onClick={() => addImg(dog)}
-                    aria-label={`add dogo ${dog}`} 
-                    className={classes.icon}>
-                    { imgGallery.includes(dog) ? <CheckCircleIcon /> : <AddIcon /> }
+                    aria-label={`add dogo ${dog}`}>
+                    { imgGallery.includes(dog) ? <CheckCircleIcon className={classes.picked} /> : <AddIcon className={classes.unpicked} /> }
                   </IconButton>
                 }
               />

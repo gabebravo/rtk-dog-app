@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -6,6 +6,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/AddCircle';
+import Dialog from '@material-ui/core/Dialog';
 import { useSelector } from 'react-redux';
 import { breed, breedImages } from '../../redux/breedsReducer';
 
@@ -48,11 +49,16 @@ interface Props {
 
 export default function BreedImages({}: Props): ReactElement {
   const classes = useStyles();
+  const [modalImg, setModalImg] = useState('');
   const breedName = useSelector(breed);
   const breedImgList = useSelector(breedImages);
 
   const addImg = (dog: string): void => {
-    console.log('img', dog)
+    console.log('icon', dog)
+  }
+
+  const showModal = (imgSrc: string): void => {
+    setModalImg(imgSrc)
   }
   
   // TODO : ADD ON IMG CLICK MAKE LARGER SAMPLE
@@ -65,7 +71,7 @@ export default function BreedImages({}: Props): ReactElement {
           </GridListTile>
           {breedImgList.length && breedImgList.map((dog: string) => (
             <GridListTile key={dog}>
-              <img src={dog} alt={dog} />
+              <img src={dog} alt={dog} onClick={() => showModal(dog)}/>
               <GridListTileBar
                 actionIcon={
                   <IconButton 
@@ -79,6 +85,9 @@ export default function BreedImages({}: Props): ReactElement {
             </GridListTile>
           ))}
         </GridList>
+        <Dialog onClose={() => showModal('')} aria-labelledby="simple-dialog-title" open={Boolean(modalImg)}>
+          <img src={modalImg} alt={modalImg} />
+        </Dialog>
       </div>
     );
   }

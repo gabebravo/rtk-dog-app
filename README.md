@@ -18,3 +18,7 @@ The createSelector utility from the Reselect library, re-exported for ease of us
 - [Getting Started](https://redux-toolkit.js.org/introduction/getting-started)
 - [Usage Guide](https://redux-toolkit.js.org/usage/usage-guide)
 - [Usage Guide with Typescript](https://redux-toolkit.js.org/usage/usage-with-typescript)
+
+## Dog Images API Link:
+
+- [Dogo Images by Breed](https://dog.ceo/dog-api/documentation/breed)
